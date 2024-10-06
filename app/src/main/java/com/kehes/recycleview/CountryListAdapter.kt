@@ -1,5 +1,6 @@
 package com.kehes.recycleview
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +26,7 @@ class CountryListAdapter(private val items: List<String>):
     class CountryViewHolder(private val binding: ItemCountryBinding):
         RecyclerView.ViewHolder(binding.root) {
         fun bindView(item: String) {
+            //Log.e("item", ">>> item: $item")
             binding.root.text = item
         }
     }
