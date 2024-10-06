@@ -18,10 +18,27 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        var position = 0
         val countryList = CountryListMaker.getCountryList(this)
-        val adapter = CountryListAdapter(countryList)
+        val list: MutableList<CountryListDto> = mutableListOf()
+        countryList.forEachIndexed{ index, item ->
+            if (index % 5 == 0) list.add(CountryListDto(CountryListType.REGION_VIEW, "Region $index"))
+            else list.add(CountryListDto(CountryListType.COUNTRY_VIEW, item))
+        }
+        val adapter = CountryListAdapter(list)
 
         binding.listView.adapter = adapter
-        binding.listView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, true)
+        binding.listView.layoutManager = LinearLayoutManager(this)
+
+        binding.addButton.setOnClickListener {
+            countryList[position] = position.toString()
+            adapter.notifyItemChanged(position)
+            position++
+
+            /*
+            list.add(countryList[list.size])
+            adapter.notifyItemRangeChanged(list.size, list.size)
+*/
+        }
     }
 }
